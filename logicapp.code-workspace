@@ -1,0 +1,147 @@
+{
+    "$connections": {
+        "value": {
+            "azureblob": {
+                "connectionId": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/resourceGroups/logic/providers/Microsoft.Web/connections/azureblob",
+                "connectionName": "azureblob",
+                "id": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/providers/Microsoft.Web/locations/westeurope/managedApis/azureblob"
+            },
+            "faceapi": {
+                "connectionId": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/resourceGroups/logic/providers/Microsoft.Web/connections/faceapi",
+                "connectionName": "faceapi",
+                "id": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/providers/Microsoft.Web/locations/westeurope/managedApis/faceapi"
+            },
+            "twilio": {
+                "connectionId": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/resourceGroups/logic/providers/Microsoft.Web/connections/twilio",
+                "connectionName": "twilio",
+                "id": "/subscriptions/6cdbda82-9a3c-4ce7-b45d-c56734266a27/providers/Microsoft.Web/locations/westeurope/managedApis/twilio"
+            }
+        }
+    },
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Detect_faces": {
+                "inputs": {
+                    "body": {
+                        "url": "https://lifelikeresource.blob.core.windows.net@{triggerBody()?['Path']}"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['faceapi']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/face/v1.0/detect",
+                    "queries": {
+                        "returnFaceAttributes": "age,gender,headPose,smile,facialHair,glasses",
+                        "returnFaceId": "true",
+                        "returnFaceLandmarks": "true"
+                    }
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            },
+            "For_each": {
+                "actions": {
+                    "Condition": {
+                        "actions": {
+                            "Send_Text_Message_(SMS)": {
+                                "inputs": {
+                                    "body": {
+                                        "body": "@{triggerBody()?['Name']} is under 18",
+                                        "from": "+48799448746",
+                                        "to": "+48600836095"
+                                    },
+                                    "host": {
+                                        "connection": {
+                                            "name": "@parameters('$connections')['twilio']['connectionId']"
+                                        }
+                                    },
+                                    "method": "post",
+                                    "path": "/Messages.json"
+                                },
+                                "runAfter": {},
+                                "type": "ApiConnection"
+                            }
+                        },
+                        "else": {
+                            "actions": {
+                                "Send_Text_Message_(SMS)_2": {
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{triggerBody()?['Name']} is older than 18",
+                                            "from": "+48799448746",
+                                            "to": "+48600836095"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['twilio']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/Messages.json"
+                                    },
+                                    "runAfter": {},
+                                    "type": "ApiConnection"
+                                }
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "less": [
+                                        "@items('For_each')?['faceAttributes']?['age']",
+                                        18
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {},
+                        "type": "If"
+                    }
+                },
+                "foreach": "@body('Detect_faces')",
+                "runAfter": {
+                    "Detect_faces": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "When_a_blob_is_added_or_modified_(properties_only)": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureblob']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/datasets/default/triggers/batch/onupdatedfile",
+                    "queries": {
+                        "folderId": "JTJmaW1hZ2Vz"
+                    }
+                },
+                "metadata": {
+                    "JTJmaW1hZ2Vz": "/images"
+                },
+                "recurrence": {
+                    "frequency": "Minute",
+                    "interval": 3
+                },
+                "splitOn": "@triggerBody()",
+                "type": "ApiConnection"
+            }
+        }
+    }
+}
