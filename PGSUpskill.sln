@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeLike.Shared", "LifeLike
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeLike.CloudService", "LifeLike.CloudService\LifeLike.CloudService.csproj", "{3C3B6FC5-72B8-44CC-BB5E-793A29E2DED0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serverless", "..\..\function apps\serverless\serverless.csproj", "{CCE5DE23-16CC-409E-A6F9-A450A98642CA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
