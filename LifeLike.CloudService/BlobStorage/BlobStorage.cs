@@ -30,12 +30,13 @@ namespace LifeLike.CloudService.BlobStorage
 
         public CloudBlobClient BlobClient { get; }
 
-        public async Task<string> Create(BlobItem item)
+        public async Task<BlobItem> Create(BlobItem item)
         {
             var container = GetContainer(item.Container);
             var blob = container.GetBlockBlobReference(item.Name);
-            await blob.UploadFromStreamAsync(item.Stream);            
-            return blob.Uri.AbsoluteUri;
+            await blob.UploadFromStreamAsync(item.Stream);
+            item.Uri = blob.Uri.AbsoluteUri;            
+            return item;
         }
         public async Task<IEnumerable<BlobItem>> GetList(string folder)
         {
@@ -52,7 +53,7 @@ namespace LifeLike.CloudService.BlobStorage
         {
             var container = GetContainer(folder);
             var blob = container.GetBlockBlobReference(name);          
-            
+            blob.
             return GenerateBlob(blob);
         }
         public async Task<Result> Update(BlobItem item)
