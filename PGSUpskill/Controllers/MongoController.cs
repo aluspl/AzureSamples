@@ -18,12 +18,25 @@ namespace PGSUpskill.Controllers
         private readonly IUnitOfWork _unit;
         private IRepository<Item> _repo;
 
+
         public MongoController(IServiceProvider provider)
         {
            
             _unit = provider.GetServices<IUnitOfWork>().FirstOrDefault(p => p.Provider == LifeLike.Shared.Enums.Provider.MongoDB);
             _repo = _unit.Get<Item>();
         }
+
+        public IEnumerable<IUnitOfWork> UnitOfWorks { get; }
+        public MongoController(IEnumerable<IUnitOfWork> unitOfWorks)
+        {
+            UnitOfWorks = unitOfWorks;
+        }
+
+        public IUnitOfWork Get(LifeLike.Shared.Enums.Provider provider)
+        {
+            return UnitOfWorks.FirstOrDefault(p => p.Provider == provider);
+        }
+
         // GET: api/<controller>
         [HttpGet]
         public IActionResult Get()

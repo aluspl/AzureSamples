@@ -1,9 +1,5 @@
-﻿using LifeLike.Shared.Enums;
-using LifeLike.Shared.Model;
-using LifeLike.Shared.Models;
+﻿using LifeLike.Shared.Model;
 using Microsoft.WindowsAzure.Storage.Table;
-using System;
-using System.Collections.Generic;
 
 namespace LifeLike.CloudService.TableStorage
 {
@@ -16,11 +12,9 @@ namespace LifeLike.CloudService.TableStorage
         {
             return new ItemEntity
             {
-
                 RowKey = item.Id,
                 PartitionKey = "ITEM",
-                Value = item.Value
-                   
+                Value = item.Value                   
             };
         }
         internal static Item Convert(ItemEntity item)

@@ -36,6 +36,19 @@ namespace PGSUpskill
             services.AddScoped<IUnitOfWork, SQLUnitOfWork>();
             services.AddScoped<IUnitOfWork, MongoUnitOfWork>();
             services.AddScoped<ITableStorage, TableStorage>();
+
+            //services.Configure<BlobStorageOptions>("BlobStorage", Configuration);
+
+            //services.AddTransient<CloudTable>(provider => {
+
+            //    var storageAccount = CloudStorageAccount.Parse(configuration["BlobStorage"]);
+            //    var _tableClient = storageAccount.CreateCloudTableClient();
+
+            //    var _table = _tableClient.GetTableReference("photos");
+            //    _table.CreateIfNotExistsAsync().Wait();
+            //    return _table;
+            //});
+
             services.AddMvc();
 
         }

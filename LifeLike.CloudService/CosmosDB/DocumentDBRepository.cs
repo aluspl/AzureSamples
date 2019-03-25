@@ -20,6 +20,7 @@ namespace LifeLike.CloudService.CosmosDB
 
         public DocumentDBRepository(IConfiguration configuration)
         {
+            //IOption<Class>
             _configuration = configuration;
             var EndpointUri = configuration["CosmosDBEndpoint"];
             var CosmosDBKey = configuration["CosmosDBKey"];
