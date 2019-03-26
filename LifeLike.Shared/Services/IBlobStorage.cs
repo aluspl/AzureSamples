@@ -9,7 +9,7 @@ namespace LifeLike.Shared.Services
 {
     public interface IBlobStorage
     {
-        Task<string> Create(BlobItem item);
+        Task<BlobItem> Create(BlobItem item);
         Task<Result> Update(BlobItem item);
 
         Task<Result> Remove(string name, string folder); 

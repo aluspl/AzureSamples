@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeLike.CloudService", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serverless", "..\..\function apps\serverless\serverless.csproj", "{CCE5DE23-16CC-409E-A6F9-A450A98642CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurableFunction", "DurableFunction\DurableFunction.csproj", "{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DurableFunction", "DurableFunction\DurableFunction.csproj", "{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
