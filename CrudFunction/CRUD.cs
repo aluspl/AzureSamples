@@ -37,8 +37,12 @@ namespace CrudFunction
             {
                 return new NotFoundResult();
             }
-            var operation = TableOperation.Retrieve("*", id);
+            var operation = TableOperation.Retrieve("ACTION", id);
             var result = await actionTable.ExecuteAsync(operation);
+            if (result==null)
+            {
+                return new NotFoundResult();
+            }
             return new OkObjectResult(((ActionEntity)result.Result).ToAction());
         }
         [FunctionName("Delete")]
