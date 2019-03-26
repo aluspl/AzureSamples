@@ -2,3 +2,5 @@ obj/
 bin/
 /.vs/PGSUpskill/v15
 /CrudFunction/Properties/PublishProfiles
+/.vs/PGSUpskill/DesignTimeBuild
+/DurableFunction/Properties/PublishProfiles
