@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeLike.Shared", "LifeLike
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeLike.CloudService", "LifeLike.CloudService\LifeLike.CloudService.csproj", "{3C3B6FC5-72B8-44CC-BB5E-793A29E2DED0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serverless", "..\..\function apps\serverless\serverless.csproj", "{CCE5DE23-16CC-409E-A6F9-A450A98642CA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DurableFunction", "DurableFunction\DurableFunction.csproj", "{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudFunction", "CrudFunction\CrudFunction.csproj", "{6C36754A-C678-4248-9E6E-269BB9BC8A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{3C3B6FC5-72B8-44CC-BB5E-793A29E2DED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C3B6FC5-72B8-44CC-BB5E-793A29E2DED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C3B6FC5-72B8-44CC-BB5E-793A29E2DED0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCE5DE23-16CC-409E-A6F9-A450A98642CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCE5DE23-16CC-409E-A6F9-A450A98642CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCE5DE23-16CC-409E-A6F9-A450A98642CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCE5DE23-16CC-409E-A6F9-A450A98642CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FA15814-D5A2-4669-AA1A-5EC8004C63D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C36754A-C678-4248-9E6E-269BB9BC8A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C36754A-C678-4248-9E6E-269BB9BC8A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C36754A-C678-4248-9E6E-269BB9BC8A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C36754A-C678-4248-9E6E-269BB9BC8A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
