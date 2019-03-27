@@ -13,7 +13,7 @@ namespace lifelike.CrudFunction
     {
         public string Name { get; set; }
         public string Status { get; set; }
-    }
+    }  
     public static class Mappings
     {
         public static ActionEntity ToEntity(this Action todo)

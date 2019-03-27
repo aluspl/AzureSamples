@@ -27,6 +27,7 @@ namespace PGSUpskill
                     builtConfig["AzureADApplicationId"],
                     builtConfig["AzureADPassword"]);
             })
+            
                 .UseStartup<Startup>();
     }
 }

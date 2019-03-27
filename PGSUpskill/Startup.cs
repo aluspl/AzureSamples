@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LifeLike.CloudService;
 using LifeLike.CloudService.CosmosDB;
 using LifeLike.CloudService.MongoDB;
 using LifeLike.CloudService.SqlDB;
@@ -12,10 +13,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PGSUpskill.Extensions;
 using CosmosUnitOfWork = LifeLike.CloudService.CosmosDB.CosmosUnitOfWork;
 
 namespace PGSUpskill
@@ -32,12 +35,8 @@ namespace PGSUpskill
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, CosmosUnitOfWork>();
-            services.AddScoped<IUnitOfWork, SQLUnitOfWork>();
-            services.AddScoped<IUnitOfWork, MongoUnitOfWork>();
-            services.AddScoped<ITableStorage, TableStorage>();
+            Config.SetupCloudService(services);
 
-            //services.Configure<BlobStorageOptions>("BlobStorage", Configuration);
 
             //services.AddTransient<CloudTable>(provider => {
 
@@ -48,10 +47,12 @@ namespace PGSUpskill
             //    _table.CreateIfNotExistsAsync().Wait();
             //    return _table;
             //});
-
+            services.AddSwaggerSetting();
             services.AddMvc();
 
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -65,7 +66,9 @@ namespace PGSUpskill
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseSwaggerSetting();
+            var option = new RewriteOptions().AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
             app.UseHttpsRedirection();
             app.UseMvc();
         }
