@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Features.AttributeFilters;
 using LifeLike.Shared;
+using LifeLike.Shared.Enums;
 using LifeLike.Shared.Model;
 using LifeLike.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +17,11 @@ namespace PGSUpskill.Controllers
     [Route("api/[controller]")]
     public class SQLController : Controller
     {
-        private readonly IUnitOfWork _unit;
         private IRepository<Item> _repo;
 
-        public SQLController(IServiceProvider provider)
+        public SQLController(IUnitOfWork unit)
         {
-           
-            _unit = provider.GetServices<IUnitOfWork>().FirstOrDefault(p => p.Provider == LifeLike.Shared.Enums.Provider.EF);
-            _repo = _unit.Get<Item>();
+            _repo = unit.Get<Item>();
         }
         // GET: api/<controller>
         [HttpGet]

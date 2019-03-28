@@ -74,7 +74,35 @@ namespace MailFunction
                 return null;
             }
         }
-
+        [FunctionName("MailStorageQueue")]
+        [return: Queue(TopicName, Connection = "AzureWebJobsStorage")]
+        public static string RunMailStorageQueue(
+            [QueueTrigger(TopicName, Connection = "AzureWebJobsStorage")]string json,
+            [SendGrid(ApiKey = "SendGridKey")] out SendGridMessage message,
+            ILogger log)
+        {
+            try
+            {
+                log.LogInformation($"MailStorageQueue: {json}");
+                var request = JsonConvert.DeserializeObject<QueueMsg>(json);
+                if (request.Type == "Mail")
+                {
+                    message = SendEmail(request);
+                    return JsonConvert.SerializeObject(new QueueMsg { Type = "DB", Body = request.Body });
+                }
+                else
+                {
+                    message = null;
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                log.LogError(e, "MailStorageQueue");
+                message = null;
+                return null;
+            }
+        }
         private static SendGridMessage SendEmail(QueueMsg request)
         {
             SendGridMessage message;

@@ -1,5 +1,4 @@
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
@@ -29,7 +28,7 @@ namespace QueueDBFunction
             catch (Exception e)
             {
                 log.LogError(e, "DBFunctionQueue");
-            }            
+            }
         }
 
         private static void AddItem(CloudTable table, QueueMsg message)
@@ -43,11 +42,14 @@ namespace QueueDBFunction
                 };
                 var operation = TableOperation.Insert(item);
                 table.ExecuteAsync(operation).Wait();
-            }          
+            }
         }
+        
 
-        [FunctionName("DBFunctionTopic")]
-        public static void RunDBTopic([ServiceBusTrigger(TopicName,SubscriptionName, Connection = "SB")]string json,
+
+
+[FunctionName("DBFunctionTopic")]
+        public static void RunDBTopic([ServiceBusTrigger(TopicName, SubscriptionName, Connection = "SB")]string json,
           [Table("DB1", Connection = "AzureWebJobsStorage")] CloudTable table,
           ILogger log)
         {
@@ -60,6 +62,22 @@ namespace QueueDBFunction
             catch (Exception e)
             {
                 log.LogError(e, "DBFunctionTopic");
+            }
+        }
+        [FunctionName("DBFunctionStorageQueue")]
+        public static void RunDBTopicStorageQueue([QueueTrigger(TopicName, Connection = "AzureWebJobsStorage")]         string json,        
+        [Table("DB1", Connection = "AzureWebJobsStorage")] CloudTable table,
+          ILogger log)
+        {
+            try
+            {
+                log.LogInformation($"DBTopicStorageQueue: {json}");
+                var message = JsonConvert.DeserializeObject<QueueMsg>(json);
+                AddItem(table, message);
+            }
+            catch (Exception e)
+            {
+                log.LogError(e, "DBTopicStorageQueue");
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿using LifeLike.CloudService.CosmosDB;
+﻿using Autofac;
+using LifeLike.CloudService.CosmosDB;
 using LifeLike.CloudService.MongoDB;
 using LifeLike.CloudService.ServiceBus;
 using LifeLike.CloudService.SqlDB;
 using LifeLike.Shared;
+using LifeLike.Shared.Enums;
 using LifeLike.Shared.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,17 +13,15 @@ using System.Text;
 
 namespace LifeLike.CloudService
 {
-    public class Config
+    public static class Config
     {
-        public static void SetupCloudService(IServiceCollection services)
+        public static void SetupCloudService(this ContainerBuilder services)
         {
-            services.AddScoped<IUnitOfWork, CosmosUnitOfWork>();
-            services.AddScoped<IUnitOfWork, SQLUnitOfWork>();
-            services.AddScoped<IUnitOfWork, MongoUnitOfWork>();
-            services.AddScoped<ITableStorage, TableStorage.TableStorage>();
-            //services.AddScoped<IServiceBus, ServiceBusService>();
+          
+        }
+        public static void SetupBackground(this IServiceCollection services)
+        {
             services.AddHostedService<ServiceBusService>();
-
         }
     }
 }

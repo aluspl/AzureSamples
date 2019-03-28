@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Features.AttributeFilters;
 using LifeLike.Shared;
+using LifeLike.Shared.Enums;
 using LifeLike.Shared.Model;
 using LifeLike.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,27 +17,13 @@ namespace PGSUpskill.Controllers
     [Route("api/[controller]")]
     public class MongoController : Controller
     {
-        private readonly IUnitOfWork _unit;
         private IRepository<Item> _repo;
 
-
-        public MongoController(IServiceProvider provider)
+        public MongoController([KeyFilter(Provider.MongoDB)] IUnitOfWork unitOfWorks)
         {
-           
-            _unit = provider.GetServices<IUnitOfWork>().FirstOrDefault(p => p.Provider == LifeLike.Shared.Enums.Provider.MongoDB);
-            _repo = _unit.Get<Item>();
+            _repo = unitOfWorks.Get<Item>();
         }
 
-        public IEnumerable<IUnitOfWork> UnitOfWorks { get; }
-        public MongoController(IEnumerable<IUnitOfWork> unitOfWorks)
-        {
-            UnitOfWorks = unitOfWorks;
-        }
-
-        public IUnitOfWork Get(LifeLike.Shared.Enums.Provider provider)
-        {
-            return UnitOfWorks.FirstOrDefault(p => p.Provider == provider);
-        }
 
         // GET: api/<controller>
         [HttpGet]

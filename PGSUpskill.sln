@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DurableFunction", "DurableF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudFunction", "CrudFunction\CrudFunction.csproj", "{6C36754A-C678-4248-9E6E-269BB9BC8A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueMailFunction", "MailFunction\QueueMailFunction.csproj", "{19E4286D-3400-4325-A351-B053939B727D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueMailFunction", "MailFunction\QueueMailFunction.csproj", "{19E4286D-3400-4325-A351-B053939B727D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{2AAEE215-1415-48D5-9EA2-386BFE93439E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueDBFunction", "QueueDBFunction\QueueDBFunction.csproj", "{35267895-FEA7-4E5D-9D65-10D71481DFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueDBFunction", "QueueDBFunction\QueueDBFunction.csproj", "{35267895-FEA7-4E5D-9D65-10D71481DFBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

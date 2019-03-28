@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using System;
 
 namespace PGSUpskill
 {
@@ -18,7 +14,14 @@ namespace PGSUpskill
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration((context, config) =>
+            WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(SetupKeyVault())
+             .ConfigureServices(services => services.AddAutofac())
+             .UseStartup<Startup>();
+
+        private static Action<WebHostBuilderContext, IConfigurationBuilder> SetupKeyVault()
+        {
+            return (context, config) =>
             {
                 var builtConfig = config.Build();
 
@@ -26,8 +29,7 @@ namespace PGSUpskill
                     $"https://{builtConfig["KeyVaultName"]}.vault.azure.net/",
                     builtConfig["AzureADApplicationId"],
                     builtConfig["AzureADPassword"]);
-            })
-            
-                .UseStartup<Startup>();
+            };
+        }
     }
 }
