@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using LifeLike.CloudService.CosmosDB;
 using LifeLike.CloudService.MongoDB;
+using LifeLike.CloudService.Search;
 using LifeLike.CloudService.SqlDB;
 using LifeLike.Shared;
 using LifeLike.Shared.Enums;
@@ -12,9 +13,10 @@ namespace LifeLike.CloudService
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CosmosUnitOfWork>().As<IUnitOfWork>().Named<IUnitOfWork>(Provider.CosmosDB.ToString());
-            builder.RegisterType<SQLUnitOfWork>().As<IUnitOfWork>().Named<IUnitOfWork>(Provider.EF.ToString());
-            builder.RegisterType<MongoUnitOfWork>().As<IUnitOfWork>().Named<IUnitOfWork>(Provider.MongoDB.ToString());
+            builder.RegisterType<CosmosUnitOfWork>().As<IUnitOfWork>().Keyed<IUnitOfWork>(Provider.CosmosDB);
+            builder.RegisterType<SQLUnitOfWork>().As<IUnitOfWork>().Keyed<IUnitOfWork>(Provider.EF);
+            builder.RegisterType<MongoUnitOfWork>().As<IUnitOfWork>().Keyed<IUnitOfWork>(Provider.MongoDB);
+            builder.RegisterType<SearchService>().As<ISearchService>();
             builder.RegisterType<TableStorage.TableStorage>().As<ITableStorage>();
         }
     }
