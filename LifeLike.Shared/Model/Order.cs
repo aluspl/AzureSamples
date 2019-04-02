@@ -6,7 +6,8 @@ namespace LifeLike.Shared.Model
 {
     public class Order
     {
-        public string Id { get; set; }
+        public string RowKey { get; set; }
+        public string Id { get => RowKey; set => RowKey=value; }
         public string ClientName { get; set; }
         public DateTime Date { get; set; }
         public ICollection<Product> Products { get; set; }

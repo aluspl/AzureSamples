@@ -18,6 +18,8 @@ namespace LifeLike.CloudService
             builder.RegisterType<MongoUnitOfWork>().As<IUnitOfWork>().Keyed<IUnitOfWork>(Provider.MongoDB);
             builder.RegisterType<SearchService>().As<ISearchService>();
             builder.RegisterType<TableStorage.TableStorage>().As<ITableStorage>();
+            builder.RegisterType<TableStorage.OrderTableStorage>().As<IOrderTableStorage>();
+
         }
     }
 }

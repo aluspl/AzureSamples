@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace LifeLike.CloudService.TableStorage
 {
-    public class TableStorage : ITableStorage
+    public class OrderTableStorage : IOrderTableStorage
     {
         private readonly CloudTableClient _tableClient;
 
         public bool IsWorking { get => _tableClient != null; }
 
-        public TableStorage(IConfiguration configuration)
+        public OrderTableStorage(IConfiguration configuration)
         {
             try
             {
@@ -39,33 +39,33 @@ namespace LifeLike.CloudService.TableStorage
         }
 
 
-        public async Task<IEnumerable<Item>> List()
+        public async Task<IEnumerable<Order>> List()
         {
-            var query = new TableQuery<ItemEntity>();
-            var result = await GetTable("Item").ExecuteQuerySegmentedAsync(query, null);
-            return result.Results.Select(item => ItemEntity.Convert(item));            
+            var query = new TableQuery<OrderEntity>();
+            var result = await GetTable("orders").ExecuteQuerySegmentedAsync(query, null);
+            return result.Results.Select(item => OrderEntity.Convert(item));            
         }
-        public async Task<Item> GetItem(string id)
+        public async Task<Order> GetItem(string id)
         {
-            var query = TableOperation.Retrieve<ItemEntity>("ITEM",id);
-            var result = await GetTable("Item").ExecuteAsync(query);
-            return ItemEntity.Convert((ItemEntity)result.Result);
+            var query = TableOperation.Retrieve<OrderEntity>("order",id);
+            var result = await GetTable("orders").ExecuteAsync(query);
+            return OrderEntity.Convert((OrderEntity)result.Result);
         }
-        public async Task<Result> Create(Item item)
+        public async Task<Result> Create(Order item)
         {
-            var model = ItemEntity.Convert(item);
+            var model = OrderEntity.Convert(item);
            
             var insert = TableOperation.Insert(model);
-            await GetTable("Item").ExecuteAsync(insert);
+            await GetTable("orders").ExecuteAsync(insert);
             return Result.Success;
         }
         
-        public async Task<Result> Delete(Item item)
+        public async Task<Result> Delete(Order item)
         {
-            var model = ItemEntity.Convert(item);
+            var model = OrderEntity.Convert(item);
 
             var delete = TableOperation.Delete(model);
-            await GetTable("Item").ExecuteAsync(delete);
+            await GetTable("orders").ExecuteAsync(delete);
             return Result.Success;
         }
         public async  Task<Result> DeleteAll(string v)
@@ -74,12 +74,12 @@ namespace LifeLike.CloudService.TableStorage
             return Result.Success;
         }
 
-        public async Task<Result> Update(string id, Item value)
+        public async Task<Result> Update(string id, Order value)
         {
-            var model = ItemEntity.Convert(value);
+            var model = OrderEntity.Convert(value);
 
             var replace = TableOperation.Replace(model);
-            await GetTable("Item").ExecuteAsync(replace);
+            await GetTable("orders").ExecuteAsync(replace);
             return Result.Success;
         }
     }

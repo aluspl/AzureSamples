@@ -20,7 +20,7 @@ namespace LifeLike.CloudService.MongoDB
         public MongoDBRepository(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionstring = configuration["CosmosDBName"];
+            _connectionstring = configuration["MongoDB"];
             _client = new MongoClient(_connectionstring);
             _collection = GetCollection();
         }
@@ -56,7 +56,8 @@ namespace LifeLike.CloudService.MongoDB
 
         public IEnumerable<T> GetOverview(Expression<Func<T, bool>> predicate = null)
         {
-            var item = _collection.Find(predicate);
+
+            var item = GetCollection().Find(predicate);
             return item.ToEnumerable();
         }
 
@@ -68,12 +69,12 @@ namespace LifeLike.CloudService.MongoDB
       
         public void Update(string id, T entity)
         {
-            _collection.ReplaceOne(id, entity);
+            GetCollection().ReplaceOne(id, entity);
         }
 
         public void Update(Entity query, T entity)
         {
-            _collection.ReplaceOne(query.Id, entity);
+            GetCollection().ReplaceOne(query.Id, entity);
         }
     }
 }
