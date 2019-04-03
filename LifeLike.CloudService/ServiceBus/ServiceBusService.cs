@@ -31,12 +31,12 @@ namespace LifeLike.CloudService.ServiceBus
 
         public void SendMessage(string message, string name)
         {
-           _client.SendAsync(new Message { Body = Encoding.UTF8.GetBytes(message) }).ConfigureAwait(false).GetAwaiter();
+           //_client.SendAsync(new Message { Body = Encoding.UTF8.GetBytes(message) }).ConfigureAwait(false).GetAwaiter();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _client.RegisterMessageHandler(Subscribe, OnError);        
+         //   _client.RegisterMessageHandler(Subscribe, OnError);        
         }
 
         private Task OnError(ExceptionReceivedEventArgs arg)
@@ -53,7 +53,7 @@ namespace LifeLike.CloudService.ServiceBus
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await _client.CloseAsync();
+      //      await _client.CloseAsync();
         }
     }
 }

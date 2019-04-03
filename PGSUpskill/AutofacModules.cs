@@ -12,7 +12,6 @@ namespace PGSUpskill
         protected override void Load(ContainerBuilder builder)
         {
             builder.SetupCloudService();
-
         }
     }
 }

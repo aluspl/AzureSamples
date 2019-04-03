@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using LifeLike.CloudService;
+using LifeLike.ElasticSearch;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
@@ -31,6 +32,7 @@ namespace PGSUpskill
         {
             builder.RegisterModule(new CloudModule());
             builder.RegisterModule(new AutofacModule());
+            builder.RegisterModule(new ElasticSearchModule());
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

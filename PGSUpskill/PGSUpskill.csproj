@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElasticSearch\ElasticSearch.csproj" />
     <ProjectReference Include="..\LifeLike.CloudService\LifeLike.CloudService.csproj" />
     <ProjectReference Include="..\LifeLike.Shared\LifeLike.Shared.csproj" />
   </ItemGroup>
