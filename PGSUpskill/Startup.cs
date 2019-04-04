@@ -26,7 +26,7 @@ namespace PGSUpskill
         {
             services.AddSwaggerSetting();
             services.SetupBackground();
-            services.AddMvc();
+            services.AddMvc().AddControllersAsServices();
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {

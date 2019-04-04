@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Autofac.Features.AttributeFilters;
 using LifeLike.CloudService;
+using PGSUpskill.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,11 @@ namespace PGSUpskill
         protected override void Load(ContainerBuilder builder)
         {
             builder.SetupCloudService();
+            builder.RegisterType<MongoController>().WithAttributeFiltering();
+
+            builder.RegisterType<CosmosController>().WithAttributeFiltering();
+            builder.RegisterType<SQLController>().WithAttributeFiltering();
+
         }
     }
 }
